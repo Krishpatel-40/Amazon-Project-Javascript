@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10.E</title>
+    <style>
+        
+        .toggle-button {
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            background-color: black;
+            color: white;
+        }
+        .on{
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            background-color: rgb(224, 224, 224);
+            color: black;
+            
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-button  game" onclick="change('.game');">Gaming</button>
+    <button class="toggle-button  music" onclick="change('.music');">Music</button>
+    <button class="toggle-button  tech" onclick="change('.tech');">Tech</button>
+    <script>
+      function turnOffprevious(){
+          const btns = document.querySelector('.on');
+          if(btns){
+              btns.classList.remove('on');
+          }
+        }
+        function change(selector){
+          //console.log();
+          const btn = document.querySelector(selector);
+         // console.log(btn.innerHTML);
+
+          if (!btn.classList.contains('on')) {
+                turnOffprevious();
+                btn.classList.add('on'); 
+               // console.log(btn.classList);   
+            }
+            else {
+              btn.classList.remove('on'); 
+             // console.log(btn.classList);
+            }
+        }
+    </script>
+</body>
+</html>

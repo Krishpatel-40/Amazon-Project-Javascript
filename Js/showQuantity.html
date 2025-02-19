@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<!-- <style>
+			.blackbtn{
+					color:white;
+					background-color: black;
+					border: none;
+					border-width: 10px;
+					border-color: aqua;
+			}
+			p{
+					color: brown;
+			}
+	</style> -->
+</head>
+<body>
+	<!--this is a comments in html-->
+	<button  onclick="dispQunt(cartQuant);;
+	">Show Quantity</button>
+	<button  onclick="cartQuant++;
+		dispQunt(cartQuant);"> Add to cart</button>
+	<button  onclick="cartQuant+=2;
+	dispQunt(cartQuant);">+2</button>
+	<button onclick="cartQuant+=3;
+	dispQunt(cartQuant);
+	">+3</button>
+	<button onclick="cartQuant=0;
+	dispQunt(cartQuant);">Reset cart</button>
+	<button onclick="cartQuant--;
+	dispQunt(cartQuant);">Remove from cart</button>
+
+<button  onclick="cartQuant-=2;
+dispQunt(cartQuant);">-2</button>
+<button onclick="cartQuant-=3;
+dispQunt(cartQuant);
+">-3</button>
+	<p class="disp"></p>	
+	<script>
+				let cartQuant = 0;
+				const var2 = 10; // value can't be changed
+				// error here var2=540;
+		  var var3 = 45; //pela vapratu have bov nai
+			console.log(typeof(var3));  //type kei variable no
+		//boleans
+		console.log(3>5);  //ans flase aapse console ma
+		console.log(5==="5.00");
+		console.log(5 =="5.00");  // === and == are different  
+		
+			var3<var2?console.log("yes"):console.log("no");  //if-else
+		//alert("Thisi is a alert")	;
+		//this is a commnents
+		/*Multi line comments*/	
+		function dispQunt(num){
+			//console.log(`cart Quantity:${num}`);
+			document.querySelector('.disp').innerHTML = `cart Quantity:${num}`;
+		}	
+	</script>
+</body>
+</html> 

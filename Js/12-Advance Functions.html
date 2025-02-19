@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adv Functions</title>
+</head>
+<body>
+    <button class="strt" onclick="start();">
+        start
+    </button>
+    <br><br>
+    <button class="addtocart" onclick="
+  
+    addtocart();
+    ">Add to Cart</button>
+    <p class="msg"></p>
+    <button class="add" onclick="
+      messages++;
+      add();" >Add</button>
+    <button onclick="
+    if(messages>0){
+        messages--;
+        if(messages==0){
+            stopnoti();
+        }
+    }
+    ">Remove</button>
+    <script>
+        // const obj = {
+        //     num:2,
+        //     fun : function (name){
+        //         console.log("Hello "+name);
+        //     }
+        // }
+        // obj.fun("Krish");
+
+        // //set time out functions
+        // setTimeout(function(){
+        //     console.log("This will be printed after 3s");
+        // },3000);
+        // console.log("this is printed first");
+      //set interval
+    //   setInterval(() => {
+    //     console.log("interval");
+    //   }, 3000);
+    //   console.log("next line ");
+        //this will be kept on printing
+
+    //   [
+    //     'make dinner',
+    //     'do laundry',
+    //     'go to the gym'
+    //     ].forEach(function(value,index){
+    //         console.log(index , value);
+    //     }); //this is easier than for loop
+     //HW 12d. 
+      function start(){
+        const clas = document.querySelector('.strt');
+            console.log('Loading...');
+            clas.innerHTML='Loading...';
+          setInterval(() => {
+            clas.innerHTML='Finished!';
+           }, 1000);        
+    }   
+    function addtocart(){
+        document.querySelector('.msg').innerHTML='Item added to cart';
+        setInterval(() => {
+            document.querySelector('.msg').innerHTML='';
+        }, 2000);
+    }  
+    let isdisplaynotification ;
+    let messages =2;
+    let intervalId;
+    function add(){
+        if (isdisplaynotification) {
+            return;
+        }
+        isdisplaynotification = true;
+        
+       intervalId = setInterval(()=>{
+       if (document.title==='App') {
+        document.title=`(${messages}) New Messages`;
+       }else{
+        document.title='App';
+       }
+       },1000) 
+    }
+  
+    function stopnoti(){
+        isdisplaynotification = false;
+        clearInterval(intervalId);
+        document.title = 'App';
+    }
+    //justli forEach we have filter
+    console.log([1,-3,2,5,-4].filter((value,index)=>{//create a new array if return is true  with all elements that pass the test implemented by the provided function
+        // if (value>=0) {
+        //     return true;
+        // }
+        // else{
+        //     return false;
+        // } 
+        return value>=0;  
+    }));
+   
+    //map
+    console.log([1,1,3].map((value,index)=>{
+        return value*2;
+    }));
+
+
+    console.log([1,1,3].map( value=>value*2)); //this is same as above
+    </script>
+</body>
+</html>

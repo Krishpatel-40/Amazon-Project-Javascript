@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function function1(n){
+            console.log(n*2);
+        }
+        function1(10);
+        function1(20);
+        //objects
+        const objName = {
+            name:"Krish",
+            age:22,
+            ['delivery-time']:'day 3'
+        }
+        console.log(objName);
+        console.log(objName.age);
+        console.log(objName['delivery-time']);
+        console.log(typeof(objName) );
+       
+       
+        const nstdObj = {
+            name:"Krish",
+            age:22,
+            rating:{
+                stars:4.5,
+                count:87
+            },
+            fun: function funName(params){   //aa metod 6e
+                console.log("hii there"+params);
+            },
+            anuOtherval:true
+
+        }
+        console.log(nstdObj.rating.count);
+        console.log(nstdObj.fun("Krish"));
+        console.log(nstdObj.anuOtherval);
+        //JSON is a javascript object notation , aani aandar baddhi value "ni vache" store thai aane ana thi function represent no thai baki baddhu thai aane aa more universal 6e baddhi lang aane olkhi eke
+        //cpnverting Js to JSON
+        console.log(JSON.stringify(nstdObj)); //jo aama function 6e pan nai dekhadi eke
+        //convert JSON to javascript
+        const jsonString = JSON.stringify(nstdObj);
+        console.log(JSON.parse(jsonString));
+        //Local Storage jyae refresh kariye etle variables no data reset thai jai
+       localStorage.setItem('message',"Hello"); // only supports strings pelu nam jema store karvu hoi e aane biji value je store karvi hoi e          
+          
+
+       console.log('Krish'.length);
+       console.log('Krish'.toUpperCase());   //Auto-Boxing
+       //objets are refrences 
+        const obj = {
+            message:"Krish"
+        };
+        const obj2 = obj; // copy by refrence
+            console.log(obj2);
+        
+           obj.message = 'Good Morning!!';
+           console.log(obj2);
+           console.log(obj);
+           //we can't compare objects directly
+           const obj3 = {
+            message:"Krish",
+            quantity:45
+           }
+           console.log(obj===obj3); // it compares the refrences not the value
+           console.log(obj2===obj);
+           //const message  = obj.message;
+           const { message , quantity } = obj3; //destructing
+           console.log(message);
+           console.log(quantity); 
+           const obj4 = {
+            message:message,
+            method(){
+                console.log("this is  shorthand methods");
+            }
+           }
+           console.log(obj4);
+           console.log(obj4.method());
+           
+           //about arrays
+           const arr1 = [1,2,3];
+            // //const arr2 = arr1;  //khali refrence lese
+            // const arr2  =arr1.slice(); // copy kari ne nava array ma store kari de
+            // arr2.push(4);
+            // console.log(arr1);
+            // console.log(arr2);
+
+            // //destructuring
+            // const [firstval,secondval] =  [1,2,3]
+            // console.log(firstval);
+           
+           
+         </script>
+</body>
+</html>

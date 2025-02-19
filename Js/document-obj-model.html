@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM</title>
+    <style>
+        button{
+            color: black;  
+        }
+        .Subscribe{
+            color: white;
+            background-color: black;
+            border: none;
+            border-radius: 50px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .calc{
+            color: white;
+            background-color: green;
+            border: none;
+            font-size: 15px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+        .cost{
+            padding: 10px;
+            font-size: 15px;
+        }
+        .is-Subscribe{
+            background-color:rgb(240, 240, 240);
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <!-- <button>Hello</button>
+    <button class="js">Text</button> -->
+    <P>YouTube Subscribe button</P>
+    <button onclick="Subscribe(0)" class="Subscribe">Subscribe</button> 
+    <p>Amazon Shipping Calculator</p>  
+    <!-- onclick areevent listeners -->
+    <input placeholder="Cost of order" class="cost" onkeydown="
+    //console.log('Typing...');  // another event known as keydown 
+   // console.log(event.key);
+   handleKeyDown(event);">
+    <button onclick="Calculate();" class="calc">Calculate</button>
+    <p class="displycst"></p>
+    <input placeholder="Type here" class="keyupip"  onkeyup="keyupfun(event);
+    ">
+    <p class="keyup"></p>
+
+    <script>
+        // document.body.innerHTML = 'Krish';
+        // //document.title = 'Title Changed';
+        // console.log(document.title);
+        // document.title = 'Title Changed';
+        // console.log(document.body);
+        // console.log(typeof(document.body));
+        // //we can change the content of body by
+        // document.body.innerHTML = '<button>Good Job!</button>';
+        // console.log(document.querySelector('button'));// it'll only get 1st button from many 
+        // //you can get any element from the page and represent it in Js
+        // console.log(document.querySelector('button').innerHTML);
+        //to get another button
+       // console.log(document.querySelector('.js'));   //css ni jem . for class selector 
+
+        function Subscribe (){
+            
+        const cgnh = document.querySelector('.Subscribe');
+        //console.log(cgnh.innerHTML);
+        if (cgnh.innerHTML === 'Subscribe') {
+            cgnh.innerHTML ='Subscribed';
+            cgnh.classList.add('is-Subscribe');
+        } else{
+            cgnh.innerHTML = 'Subscribe';
+            cgnh.classList.remove('is-Subscribe');  //class list proerty 
+        } 
+
+       // console.log(cgnh.innerHTML);
+        }
+        function handleKeyDown(event){
+            if (event.key === 'Enter') {
+                Calculate();
+            }
+        }
+
+        function Calculate(){
+            const ip = document.querySelector('.cost');
+            let cost =Number(ip.value);   //instead of .innerHTML we use .value for input fields
+            //console.log(typeof(cost));   //here its string so convert it to number 
+            if (cost>0) {
+                console.log(cost);
+            
+            if (cost<40) {  // add shipping charges of 10$ if cost is less than 40$
+                cost+=10;
+            }
+            document.querySelector('.displycst').innerHTML=`Total Cost: $${cost}`;  
+            }
+            else{
+                document.querySelector('.displycst').innerHTML=`Please enter a valid cost`;
+            }
+                        
+        }
+        function keyupfun(event){
+                const ip = document.querySelector('.keyupip');
+                document.querySelector('.keyup').innerHTML = ip.value;            
+        }
+
+       //window object
+     //  window.console.log("Window");
+       //window.alert("Window"); // it is automatically added by browser
+    
+        
+    </script>
+</body>
+</html>
