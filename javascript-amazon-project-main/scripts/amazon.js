@@ -24,8 +24,8 @@ products.forEach((product) => {
             $${((product.priceCents)/100).toFixed(2)}
           </div>
 
-          <div class="product-quantity-container">
-            <select>
+          <div class="product-quantity-container"> 
+            <select class = "js-quantity-selector-${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -41,13 +41,13 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
 
           <button class="add-to-cart-button button-primary js-add-to-cart"
-            data-product-id = "${product.id}"    
+            data-product-id = "${product.id}" 
           //  to attach any info with html element , remeber it starts with data-
           //  and then name and  it;s data attribute(name = value) that's why ot starts with data-. 
          >
@@ -59,25 +59,39 @@ products.forEach((product) => {
 
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
-
-document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
+const displayTimeouts = {};
+document.querySelectorAll('.js-add-to-cart ').forEach((button)=>{
   button.addEventListener('click' , ()=>{
-      const productId
- = button.dataset.productId; // this will give the name of the product; 
-     let matchingItem;
-      cart.forEach((item)=>{
+      const productId= button.dataset.productId; // this will give the id of the product; 
+      const quantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value); 
+      document.querySelector(`.js-added-to-cart-${productId}`).classList.add('display-tick');
+      if (displayTimeouts[productId]) {
+        clearTimeout(displayTimeouts[productId]); // Clearing the previous timeout for the same productId
+      }
+      document.querySelector(`.js-added-to-cart-${productId}`).classList.add('display-tick');
+      displayTimeouts[productId] = setTimeout(() => {
+        document.querySelector(`.js-added-to-cart-${productId}`).classList.remove('display-tick'); // this will remove the class from the element;
+      }, 2000);
+
+      let matchingItem;
+      cart.forEach((item)=>{ 
         if(productId===item.id){
             matchingItem=item;
         }});
         if (matchingItem) {
-          matchingItem.quantity++;
+          matchingItem.quantity+=quantity;
         }else{
           cart.push({
             id : productId,
-            quantity: 1,
+            quantity: quantity,
           });//dataset gives all the attribtes of the button    
         }
-    console.log(cart) 
- 
+      let cartQuantity = 0;
+      cart.forEach((item)=>{         //etle hu baddha element cart ni aandar na (je object ma hase) ne item kais
+        cartQuantity +=item.quantity; 
+      })  
+       document.querySelector('.cart-quantity').innerHTML = cartQuantity;
     })
-})
+
+    console.log(cart)
+  })
