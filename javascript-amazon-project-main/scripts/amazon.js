@@ -8,7 +8,7 @@ products.forEach((product) => {
               src=${product.image}>
           </div>
 
-          <div class="product-name limit-text-to-2-lines">
+          <div class="product-name limit-text-to-2-lines"          >
             ${product.name}
           </div>
 
@@ -46,7 +46,11 @@ products.forEach((product) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary js-add-to-cart"
+            data-product-id = "${product.id}"    
+          //  to attach any info with html element , remeber it starts with data-
+          //  and then name and  it;s data attribute(name = value) that's why ot starts with data-. 
+         >
             Add to Cart
           </button>
         </div>
@@ -56,4 +60,24 @@ products.forEach((product) => {
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-document.querySelector('.')
+document.querySelectorAll('.js-add-to-cart').forEach((button)=>{
+  button.addEventListener('click' , ()=>{
+      const productId
+ = button.dataset.productId; // this will give the name of the product; 
+     let matchingItem;
+      cart.forEach((item)=>{
+        if(productId===item.id){
+            matchingItem=item;
+        }});
+        if (matchingItem) {
+          matchingItem.quantity++;
+        }else{
+          cart.push({
+            id : productId,
+            quantity: 1,
+          });//dataset gives all the attribtes of the button    
+        }
+    console.log(cart) 
+ 
+    })
+})
