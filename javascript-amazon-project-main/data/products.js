@@ -1,4 +1,4 @@
-const products = [  //creating a array of objects (preparing a data structure)
+export const products = [  //creating a array of objects (preparing a data structure)
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/athletic-cotton-socks-6-pairs.jpg",

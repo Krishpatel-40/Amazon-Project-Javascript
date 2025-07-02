@@ -1,3 +1,5 @@
+import { cart , addToCart} from '../data/cart.js';    //can also be done as {cart as myCart} to avoid naming conflict; 
+import { products } from '../data/products.js'; 
 let productsHTML = '';
 
 products.forEach((product) => {
@@ -57,6 +59,13 @@ products.forEach((product) => {
         `;
 });
 
+function updateCartQuantity(){
+  let cartQuantity = 0;
+  cart.forEach((cartItem)=>{         //etle hu baddha element cart ni aandar na (je object ma hase) ne item kais
+    cartQuantity +=cartItem.quantity;
+    document.querySelector('.cart-quantity').innerHTML = cartQuantity;
+  })
+}
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 const displayTimeouts = {};
@@ -64,6 +73,7 @@ document.querySelectorAll('.js-add-to-cart ').forEach((button)=>{
   button.addEventListener('click' , ()=>{
       const productId= button.dataset.productId; // this will give the id of the product; 
       const quantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value); 
+      addToCart(productId, quantity); 
       document.querySelector(`.js-added-to-cart-${productId}`).classList.add('display-tick');
       if (displayTimeouts[productId]) {
         clearTimeout(displayTimeouts[productId]); // Clearing the previous timeout for the same productId
@@ -72,26 +82,7 @@ document.querySelectorAll('.js-add-to-cart ').forEach((button)=>{
       displayTimeouts[productId] = setTimeout(() => {
         document.querySelector(`.js-added-to-cart-${productId}`).classList.remove('display-tick'); // this will remove the class from the element;
       }, 2000);
+      updateCartQuantity();
 
-      let matchingItem;
-      cart.forEach((item)=>{ 
-        if(productId===item.id){
-            matchingItem=item;
-        }});
-        if (matchingItem) {
-          matchingItem.quantity+=quantity;
-        }else{
-          cart.push({
-            id : productId,
-            quantity: quantity,
-          });//dataset gives all the attribtes of the button    
-        }
-      let cartQuantity = 0;
-      cart.forEach((item)=>{         //etle hu baddha element cart ni aandar na (je object ma hase) ne item kais
-        cartQuantity +=item.quantity; 
-      })  
-       document.querySelector('.cart-quantity').innerHTML = cartQuantity;
     })
-
-    console.log(cart)
   })
