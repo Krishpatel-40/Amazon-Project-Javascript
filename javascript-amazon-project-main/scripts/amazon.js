@@ -1,3 +1,5 @@
+import { cart , addToCart} from '../data/cart.js';    //can also be done as {cart as myCart} to avoid naming conflict; 
+import { products } from '../data/products.js'; 
 let productsHTML = '';
 
 products.forEach((product) => {
@@ -8,7 +10,7 @@ products.forEach((product) => {
               src=${product.image}>
           </div>
 
-          <div class="product-name limit-text-to-2-lines">
+          <div class="product-name limit-text-to-2-lines"          >
             ${product.name}
           </div>
 
@@ -24,8 +26,8 @@ products.forEach((product) => {
             $${((product.priceCents)/100).toFixed(2)}
           </div>
 
-          <div class="product-quantity-container js-quantity-selector-${product.id}">
-            <select>
+          <div class="product-quantity-container"> 
+            <select class = "js-quantity-selector-${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -41,49 +43,46 @@ products.forEach((product) => {
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary"
-          data-product-id="${product.id}">
+          <button class="add-to-cart-button button-primary js-add-to-cart"
+            data-product-id = "${product.id}" 
+          //  to attach any info with html element , remeber it starts with data-
+          //  and then name and  it;s data attribute(name = value) that's why ot starts with data-. 
+         >
             Add to Cart
           </button>
         </div>
         `;
 });
 
+function updateCartQuantity(){
+  let cartQuantity = 0;
+  cart.forEach((cartItem)=>{         //etle hu baddha element cart ni aandar na (je object ma hase) ne item kais
+    cartQuantity +=cartItem.quantity;
+    document.querySelector('.cart-quantity').innerHTML = cartQuantity;
+  })
+}
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
-
-document.querySelectorAll('.add-to-cart-button').forEach((button)=>{
-  button.addEventListener('click', ()=>{
-    const productId = button.dataset.productId; 
-    //name gets converted from  kebab-case (product-name) to camelCase 
-    const quantValue = document.querySelector(`.js-quantity-selector-${productId}`);
-     console.log("********************************",Number(quantValue.value));
-    let matchingItem;
-    cart.forEach((item)=>{
-      if(productId === item.productId){
-        matchingItem = item;
+const displayTimeouts = {};
+document.querySelectorAll('.js-add-to-cart ').forEach((button)=>{
+  button.addEventListener('click' , ()=>{
+      const productId= button.dataset.productId; // this will give the id of the product; 
+      const quantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value); 
+      addToCart(productId, quantity); 
+      document.querySelector(`.js-added-to-cart-${productId}`).classList.add('display-tick');
+      if (displayTimeouts[productId]) {
+        clearTimeout(displayTimeouts[productId]); // Clearing the previous timeout for the same productId
       }
+      document.querySelector(`.js-added-to-cart-${productId}`).classList.add('display-tick');
+      displayTimeouts[productId] = setTimeout(() => {
+        document.querySelector(`.js-added-to-cart-${productId}`).classList.remove('display-tick'); // this will remove the class from the element;
+      }, 2000);
+      updateCartQuantity();
+
     })
-
-    if(matchingItem){
-      matchingItem.quantity++;
-    }else{
-      cart.push({
-        productId: productId,
-        quantity: 1
-      })
-    }
-
-    let totalQuantity = 0;
-    cart.forEach((item)=>{
-      totalQuantity+= item.quantity;
-    })
-    document.querySelector('.cart-quantity').innerHTML = `${totalQuantity}`
-
-  });
-});
+  })
