@@ -209,3 +209,34 @@
   margin-top: 11px;
   margin-bottom: 15px;
 }
+
+
+.quantity-input {
+  width: 30px;
+  border-radius: 4px;
+  border: 1px solid rgb(222, 222, 222);
+  padding-left: 5px;
+  display: none;
+}
+
+.save-quantity-link{
+  display: none;
+}
+
+.is-editing-quantity {
+  
+  .quantity-input{
+  display: initial;
+  }
+  
+  .save-quantity-link {
+  display: initial;
+}
+.js-quantity-label{
+  display: none;
+}
+  .update-quantity-link {
+    display: none;
+  }
+}
+

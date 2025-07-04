@@ -1,4 +1,4 @@
-import { cart , addToCart} from '../data/cart.js';    //can also be done as {cart as myCart} to avoid naming conflict; 
+import { cart , addToCart , claculateCartQuantity} from '../data/cart.js';    //can also be done as {cart as myCart} to avoid naming conflict; 
 import { products } from '../data/products.js'; 
 import { formatCurrency } from './utils/money.js'; 
 let productsHTML = '';
@@ -60,15 +60,9 @@ products.forEach((product) => {
         `;
 });
 
-function updateCartQuantity(){
-  let cartQuantity = 0;
-  cart.forEach((cartItem)=>{         //etle hu baddha element cart ni aandar na (je object ma hase) ne item kais
-    cartQuantity +=cartItem.quantity;
-    document.querySelector('.cart-quantity').innerHTML = cartQuantity;
-  })
-}
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
+document.querySelector('.js-cart-quantity').innerHTML = claculateCartQuantity();
 const displayTimeouts = {};
 document.querySelectorAll('.js-add-to-cart ').forEach((button)=>{
   button.addEventListener('click' , ()=>{
@@ -83,7 +77,6 @@ document.querySelectorAll('.js-add-to-cart ').forEach((button)=>{
       displayTimeouts[productId] = setTimeout(() => {
         document.querySelector(`.js-added-to-cart-${productId}`).classList.remove('display-tick'); // this will remove the class from the element;
       }, 2000);
-      updateCartQuantity();
-
+      document.querySelector('.js-cart-quantity').innerHTML = claculateCartQuantity();
     })
   })
