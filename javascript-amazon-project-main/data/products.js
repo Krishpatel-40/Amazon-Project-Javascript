@@ -658,3 +658,13 @@ export const products = [  //creating a array of objects (preparing a data struc
     ]
   }
 ];
+
+export function getProducts(productId){
+  let matchingProduct;
+  products.forEach((product)=>{
+   if(product.id === productId){
+    matchingProduct = product;
+  } 
+  });
+  return matchingProduct;
+}
