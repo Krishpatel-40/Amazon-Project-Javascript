@@ -3,7 +3,7 @@ import { products ,getProducts} from "../../data/products.js";
 import  formatCurrency  from "../utils/money.js"; 
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js"; // aa direct aamj import kairvanu , karanke jya karvu hoi tya thai jai , nakar baddha ni html file ma jai ne kairvu pade
 import {deliveryOptions ,getDeliveryOption} from '../../data/deliveryoptions.js'; 
-
+import { renderPaymentSummary } from "./paymentSummary.js"; 
 
 export  function renderOrderSummmary(){
 let cartSummaryHTML = '' ;
@@ -107,10 +107,10 @@ document.querySelectorAll('.js-delete-link').forEach((link)=>{
     //call a function to delete the item from the cart.js file
     removeFromCart(idtodelete);
     // console.log("Cart after deletion", cart);
-
-  const containertodelete =  document.querySelector(`.js-cart-item-container-${idtodelete}`);
-    console.log("Container to delete", containertodelete); // aakho caontainer to aave 6e
+    const containertodelete =  document.querySelector(`.js-cart-item-container-${idtodelete}`);
+    // console.log("Container to delete", containertodelete); // aakho caontainer to aave 6e
     containertodelete.remove(); //aa aakhu container remove kari dese
+    renderPaymentSummary();   //pachu bill calculate karo
     // have problem e aavse ke reload par baddhu pachu aavi jase , etle aapde localstorage ma store karvu padse , aane delete karti vakhate localstorage ma thi delete karvu padse 
 document.querySelector('.js-cart-checkout').innerHTML = claculateCartQuantity();
   });
@@ -130,7 +130,9 @@ document.querySelectorAll('.save-quantity-link').forEach((link)=>{
     updateQuantity(idtodelete, newquantity);
     document.querySelector(`.js-cart-item-container-${idtodelete}`).classList.remove('is-editing-quantity');
     document.querySelector(`.js-quantity-label`).innerHTML = newquantity; 
-document.querySelector('.js-cart-checkout').innerHTML = claculateCartQuantity();
+    document.querySelector('.js-cart-checkout').innerHTML = claculateCartQuantity();
+      renderOrderSummmary();
+      renderPaymentSummary();
   });
 });
 
@@ -139,6 +141,7 @@ document.querySelectorAll('.js-delivery-option').forEach((element)=>{
       const {productId , deliveryOptionId} = element.dataset;
       updateDeliveryOption(productId,deliveryOptionId);
       renderOrderSummmary();
-    });
+      renderPaymentSummary();
+        });
 });
 }
