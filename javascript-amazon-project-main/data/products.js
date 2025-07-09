@@ -854,13 +854,11 @@ loadProductsFetch().then(()=>{
 });
 */
 export function getProducts(productId){
-  console.log('getProducts', productId);
   let matchingProduct;
   products.forEach((product)=>{
    if(product.id === productId){
     matchingProduct = product;
   } 
   });
-  console.log('matchingProduct', matchingProduct);
   return matchingProduct;
 }

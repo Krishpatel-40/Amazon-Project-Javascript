@@ -1,29 +1,66 @@
 import { orders } from "../data/orders.js";
 import formatCurrency from "./utils/money.js";
-import { correctDate } from "./utils/displaydate.js"; 
-import { products , getProducts, loadProductsFetch } from "../data/products.js";
+// import { correctDate } from "./utils/displaydate.js"; 
+import {  getProducts, loadProductsFetch } from "../data/products.js";
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 console.log("Orders data:", orders);
-let ordersHTML;
-let productsHTML;
-function renderProductsIntoOrderContainer(id){
-    productsHTML='';
-  let product = getProducts(id);
-   console.log("Products for order:", product);
-  if (product) {
-        return`
-            <div class="product-image-container">
-              <img src="${product.image}">
+
+
+async function loadPage(){
+    let ordersHTML;
+    await loadProductsFetch();
+
+     orders.forEach((order)=>{
+        const orderTimeString = dayjs(order.orderTime).format('MMMM D');
+        ordersHTML+=`
+         <div class="order-container">
+          <div class="order-header">
+            <div class="order-header-left-section">
+              <div class="order-date">
+                <div class="order-header-label">Order Placed:</div>
+                <div>${orderTimeString}</div>
+              </div>
+              <div class="order-total">
+                <div class="order-header-label">Total:</div>
+                <div>$${formatCurrency(order.totalCostCents)}</div>
+              </div>
+            </div>
+
+            <div class="order-header-right-section">
+              <div class="order-header-label">Order ID:</div>
+              <div>${order.id}</div>
+            </div>
+          </div>
+
+          <div class="order-details-grid">
+           ${renderProductsIntoOrderContainer(order)}
+          </div>
+        </div>`
+});
+document.querySelector('.js-order-container').innerHTML = ordersHTML; 
+
+}
+
+function renderProductsIntoOrderContainer(order){
+    let productsHTML='';
+    
+    order.products.forEach((productDetails)=>{
+        console.log("Product details:", productDetails);
+        const product = getProducts(productDetails.productId);
+        productsHTML+=`
+         <div class="product-image-container">
+              <img src=${product.image}>
             </div>
 
             <div class="product-details">
               <div class="product-name">
-                ${product.name}
+               ${product.name}
               </div>
               <div class="product-delivery-date">
-                Arriving on: ${product.estimatedDeliveryTime}
+                Arriving on:${dayjs(productDetails.estimatedDeliveryTime).format('MMMM D')}
               </div>
               <div class="product-quantity">
-                Quantity: ${product.quantity}
+                Quantity: ${productDetails.quantity}
               </div>
               <button class="buy-again-button button-primary">
                 <img class="buy-again-icon" src="images/icons/buy-again.png">
@@ -37,64 +74,10 @@ function renderProductsIntoOrderContainer(id){
                   Track package
                 </button>
               </a>
-            </div>
-        `;
-    }
-    else {
-        console.warn("Product not found for ID:", id);
-        return`
-            <div>Product not found for ID: ${id}</div>
-        `
-}
-}
-
-function renderorders(){
-    orders.forEach((item)=>{
-        const prodHTML = renderProductsIntoOrderContainer(item.products[0].productId);
-
-        ordersHTML+=`
-                <div class="order-container js-order-container">
-          
-          <div class="order-header">
-            <div class="order-header-left-section">
-              <div class="order-date">
-                <div class="order-header-label">Order Placed:</div>
-                <div>${correctDate(item.orderTime)}</div>
-              </div>
-              <div class="order-total">
-                <div class="order-header-label">Total:</div>
-                <div>$${formatCurrency(item.totalCostCents)}</div>
-              </div>
-            </div>
-
-            <div class="order-header-right-section">
-              <div class="order-header-label">Order ID:</div>
-              <div>${item.id}</div>
-            </div>
-          </div>
-
-          <div class="order-details-grid js-order-details-grid">
-            ${renderProductsIntoOrderContainer(item.products[0].productId)}
-
-            <div class="product-actions">
-              <a href="tracking.html">
-                <button class="track-package-button button-secondary">
-                  Track package
-                </button>
-              </a>
-            </div>
-          </div>
-        </div>
-        `;
-
-    })
-    document.querySelector('.js-order-container').innerHTML = ordersHTML; 
-    document.querySelector('.js-order-details-grid').innerHTML =productsHTML; 
-}
-loadProductsFetch()
-    .then(() => {
-        renderorders();
-    })
-    .catch((error) => {
-        console.error("Error loading products:", error);
+            </div>`;
     });
+    return productsHTML;
+}
+
+
+loadPage();
