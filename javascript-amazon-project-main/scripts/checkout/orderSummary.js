@@ -122,17 +122,31 @@ document.querySelectorAll('.update-quantity-link').forEach((link)=>{
   });
 });
 
-document.querySelectorAll('.save-quantity-link').forEach((link)=>{
-  link.addEventListener('click',()=>{
-      const idtodelete = link.dataset.productId;
-      const newquantity = document.querySelector('.quantity-input').value;
-      // console.log("New quantity", newquantity);
-    updateQuantity(idtodelete, newquantity);
-    document.querySelector(`.js-cart-item-container-${idtodelete}`).classList.remove('is-editing-quantity');
-    document.querySelector(`.js-quantity-label`).innerHTML = newquantity; 
+document.querySelectorAll('.save-quantity-link').forEach((link) => {
+  link.addEventListener('click', () => {
+    const productId = link.dataset.productId;
+    
+    // Find the specific container for this product
+    const container = link.closest('.cart-item-container');
+    
+    // Get the input within THIS container, not just the first one on the page
+    const quantityInput = container.querySelector('.quantity-input');
+    const newQuantity = quantityInput.value;
+    
+    // Update the quantity in the data model
+    updateQuantity(productId, newQuantity);
+    
+    // Update the UI
+    container.classList.remove('is-editing-quantity');
+    
+    // Update the specific quantity label in this container
+    container.querySelector('.js-quantity-label').innerHTML = newQuantity;
+    
+    // Update cart count
     document.querySelector('.js-cart-checkout').innerHTML = claculateCartQuantity();
-      renderOrderSummmary();
-      renderPaymentSummary();
+    
+    // We don't need to re-render everything, just update the payment summary
+    renderPaymentSummary();
   });
 });
 
