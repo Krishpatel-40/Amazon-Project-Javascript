@@ -854,7 +854,6 @@ loadProductsFetch().then(()=>{
 });
 */
 export function getProducts(productId){
-  console.log('getProducts called with productId:', productId);
   let matchingProduct;
   products.forEach((product)=>{
    if(product.id === productId){

@@ -20,12 +20,12 @@ function calculateTrack(orderTime , deliveryTime){
     
     // Ensure progress is between 0% and 100%
     progressPercentage = Math.min(Math.max(progressPercentage, 0), 100);
-    console.log("Order Time:", orderTime.format('YYYY-MM-DD HH:mm:ss'));
-    console.log("Current Time:", currentTime.format('YYYY-MM-DD HH:mm:ss'));
-    console.log("Delivery Time:", deliveryTime.format('YYYY-MM-DD HH:mm:ss'));
-    console.log("Total Duration (hours):", totalDuration / (1000 * 60 * 60));
-    console.log("Elapsed Time (hours):", elapsedTime / (1000 * 60 * 60));
-    console.log("Progress Percentage:", progressPercentage.toFixed(1) + "%");
+    // console.log("Order Time:", orderTime.format('YYYY-MM-DD HH:mm:ss'));
+    // console.log("Current Time:", currentTime.format('YYYY-MM-DD HH:mm:ss'));
+    // console.log("Delivery Time:", deliveryTime.format('YYYY-MM-DD HH:mm:ss'));
+    // console.log("Total Duration (hours):", totalDuration / (1000 * 60 * 60));
+    // console.log("Elapsed Time (hours):", elapsedTime / (1000 * 60 * 60));
+    // console.log("Progress Percentage:", progressPercentage.toFixed(1) + "%");
         let currentStatus = 'Preparing';
     if (progressPercentage >= 50 && progressPercentage < 100) {
         currentStatus = 'Shipped';
@@ -33,7 +33,7 @@ function calculateTrack(orderTime , deliveryTime){
         currentStatus = 'Delivered';
     }
     
-    console.log("Current Status:", currentStatus);
+    // console.log("Current Status:", currentStatus);
     
     return {
         percentage: progressPercentage.toFixed(1),
@@ -47,7 +47,7 @@ function renderProductsToTrack(order){
         // console.log("Product details:", productDetails);
         const product = getProducts(productDetails.productId); 
           const trackingData = calculateTrack(dayjs(order.orderTime), dayjs(productDetails.estimatedDeliveryTime)); 
-        console.log("Tracking Data:", trackingData);  
+        // console.log("Tracking Data:", trackingData);  
     productsHTML += `
      <div class="delivery-date">
           Arriving on ${dayjs(productDetails.estimatedDeliveryTime).format('MMMM,D')}
@@ -86,15 +86,15 @@ function renderProductsToTrack(order){
 async function renderTracking(){
         await loadProductsFetch();
     
-    console.log("Tracking page loaded");
+    // console.log("Tracking page loaded");
     const url = new URL(window.location.href);
         const orderId = url.searchParams.get('orderId');
         const productId = url.searchParams.get('productId');
 
-       console.log(getOrderById(orderId));
+      //  console.log(getOrderById(orderId));
        const order = (getOrderById(orderId));
        const productDetails = getProducts(productId);
-         console.log("Product details:", productDetails);
+        //  console.log("Product details:", productDetails);
         trackingHTML += `
         <div class="order-tracking">
         <a class="back-to-orders-link link-primary" href="orders.html">
@@ -107,7 +107,10 @@ async function renderTracking(){
 
         document.querySelector('.js-tracking-container').innerHTML = trackingHTML;
         document.querySelector('.js-cart-quantity').innerHTML = claculateCartQuantity();
-
+        document.querySelector('.js-search-button').addEventListener('click', () => {
+           const newurl = new URL(window.Location.href='amazon.html');
+           console.log("Search button clicked, redirecting to amazon.html",newurl);
+        });
      }
 
 
