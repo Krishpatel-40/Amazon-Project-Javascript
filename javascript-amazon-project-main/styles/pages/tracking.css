@@ -67,7 +67,7 @@
 .progress-bar-container {
   height: 25px;
   width: 100%;
-
+  
   border: 1px solid rgb(200, 200, 200);
   border-radius: 50px;
   overflow: hidden;
@@ -78,4 +78,9 @@
   background-color: green;
   border-radius: 50px;
   width: 50%;
+}
+
+
+.order-header{
+  padding-bottom: 30px;
 }

@@ -94,3 +94,8 @@ export function loadCart(fun){
   xhr.send();
 }
 
+export function emptycart(){
+  console.log("Emptying cart");
+    cart = [];
+    saveToStorage(); 
+}

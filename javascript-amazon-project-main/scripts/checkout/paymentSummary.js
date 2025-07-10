@@ -1,4 +1,4 @@
-import { cart ,claculateCartQuantity} from "../../data/cart.js";
+import { cart ,claculateCartQuantity , emptycart} from "../../data/cart.js";
 import { getProducts } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryoptions.js";
 import { formatCurrency } from "../utils/money.js";
@@ -62,6 +62,7 @@ export function renderPaymentSummary(){
     document.querySelector('.js-place-order-button').addEventListener('click', async()=>{
        //onclick we'll make a request to the backend to place the order
      try{
+
       const response =  await fetch('https://supersimplebackend.dev/orders',{
         method:'POST',
         headers:{   //headers gives the backend more information about our request
@@ -76,6 +77,7 @@ export function renderPaymentSummary(){
        const order = await response.json();
       //  console.log('Order placed',order);
        addOrders(order);
+       emptycart();
 
      }catch(error){
       console.log('Error placing order');

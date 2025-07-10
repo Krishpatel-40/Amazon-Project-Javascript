@@ -18,8 +18,6 @@ cart.forEach((cartItem) => {
   const deliverydate = today.add(deliveryOption.deliveryDays,'days');  //two parameters , no. aane kema add krvo 6e day min second etc.
   const dateString  = deliverydate.format('dddd, MMMM D');
 
-
-
 cartSummaryHTML += `
           <div class="cart-item-container 
           js-cart-item-container-${matchingProduct.id}">
@@ -113,7 +111,7 @@ document.querySelectorAll('.js-delete-link').forEach((link)=>{
     renderPaymentSummary();   //pachu bill calculate karo
     // have problem e aavse ke reload par baddhu pachu aavi jase , etle aapde localstorage ma store karvu padse , aane delete karti vakhate localstorage ma thi delete karvu padse 
 document.querySelector('.js-cart-checkout').innerHTML = claculateCartQuantity();
-  });
+  }); 
 });
 document.querySelectorAll('.update-quantity-link').forEach((link)=>{
   link.addEventListener('click',()=>{
